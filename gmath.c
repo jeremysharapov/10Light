@@ -74,6 +74,7 @@ color calculate_specular(double light[2][3], double *sreflect, double *view, dou
   }
 
   dot = dot_product(n, v);
+  dot = pow(dot, SPECULAR_EXP);
 
   s.red = s.red * sreflect[0] * dot;
   s.green = s.green * sreflect[1] * dot;
@@ -120,9 +121,13 @@ void normalize( double *vector ) {
 
 //Return the dot product of a . b
 double dot_product( double *a, double *b ) {
-  int t, i;
+  int i;
+  double t = 0;
   for (i = 0; i < 3; i++){
     t += (a[i] * b[i]);
+  }
+  if (t < 0){
+    t = 0;
   }
   return t;
 }
